@@ -99,13 +99,12 @@ public class SafeInput {
         boolean isValid = false;
         boolean retBool = false;
         do {
-            System.out.println("\n"+prompt);
+            System.out.println("\n"+prompt + ": ");
             retString = pipe.nextLine().trim().toLowerCase();
             if(retString.equals("y")){
                 retBool = true;
                 isValid = true;
             }else if (retString.equals("n")){
-                retBool = false;
                 isValid = true;
             }else{
                 System.out.println("Please enter [y or n]\n['" + retString + "'] is not correct");
