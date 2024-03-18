@@ -113,4 +113,18 @@ public class SafeInput {
         }while(!isValid);
         return retBool;
     }
+    public static String getRegExString(Scanner pipe, String prompt, String regex){
+        boolean isValid = false;
+        String retString;
+        do {
+            System.out.println("\n"+prompt + ": ");
+            retString = pipe.nextLine().trim();
+            if(retString.matches(regex)){
+                isValid = true;
+            }else{
+                System.out.println("Please enter a valid string");
+            }
+        }while(!isValid);
+        return retString;
+    }
 }
