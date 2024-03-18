@@ -5,13 +5,15 @@ public class SafeInput {
      *
      * @param pipe a Scanner opened to read from System.in
      * @param prompt prompt for the user
+     * @param low the lower bound of the range
+     * @param high the upper bound of the range
      * @return a String response that is not zero length
      */
     public static String getNonZeroLenString(Scanner pipe, String prompt)
     {
         String retString = "";
         do{
-            System.out.print("\n" +prompt + ": "); // show prompt add space
+            System.out.print("\n" +prompt + ": ");
             retString = pipe.nextLine();
         }while(retString.length() == 0);
 
@@ -23,7 +25,7 @@ public class SafeInput {
         int retInt = 0;
         boolean isValid = false;
         do {
-            System.out.println(prompt);
+            System.out.println("\n"+ prompt);
             while(!pipe.hasNextInt()){
                 System.out.println("[Invalid Number]: Enter a Valid Number");
                 System.out.println(prompt);
@@ -39,7 +41,7 @@ public class SafeInput {
         double retDouble = 0;
         boolean isValid = false;
         do {
-            System.out.println(prompt);
+            System.out.println("\n"+ prompt);
             while(!pipe.hasNextDouble()){
                 System.out.println("[Invalid Number]: Enter a Valid Number");
                 System.out.println(prompt);
@@ -55,16 +57,20 @@ public class SafeInput {
         int retInt = 0;
         boolean isValid = false;
         do {
-            System.out.println(prompt);
+            System.out.println("\n"+ prompt + " In the range [" + low + " - " + high + "]");
 
             while(!pipe.hasNextInt()){
-                System.out.println("[Error]: Invalid Number or Out of Ranged");
-                System.out.println(prompt);
+                System.out.println("[Error]: Invalid Number");
+                System.out.println(prompt + " In the range [" + low + " - " + high + "]");
                 pipe.next();
             }
             retInt = pipe.nextInt();
-            isValid = true;
-        }while(!isValid || retInt < low || retInt > high);
+            isValid = retInt > low && retInt < high ? true : false;
+            if(!isValid){
+                System.out.println("[Error]: Integer out of range");
+            }
+
+        }while(!isValid);
         return retInt;
     }
 
@@ -72,7 +78,7 @@ public class SafeInput {
         double retDouble = 0;
         boolean isValid = false;
         do {
-            System.out.println(prompt);
+            System.out.println("\n"+ prompt + " in the range [" + low + " - " + high + "]");
 
             while(!pipe.hasNextDouble()){
                 System.out.println("[Error]: Invalid Number");
@@ -80,26 +86,32 @@ public class SafeInput {
                 pipe.next();
             }
             retDouble = pipe.nextDouble();
-            isValid = true;
-        }while(!isValid || retDouble < low || retDouble > high);
+            isValid = retDouble > low && retDouble < high ? true : false;
+            if(!isValid){
+                System.out.println("[Error] Number out of Range");
+            }
+        }while(!isValid);
         return retDouble;
     }
 
     public static boolean getYNConfirm(Scanner pipe, String prompt){
         String retString = "";
-        boolean retBool;
         boolean isValid = false;
+        boolean retBool = false;
         do {
-            System.out.println(prompt);
-            while(!pipe.hasNextLine()){
-                System.out.println("[Error]: Invalid Input");
-                System.out.println(prompt);
-                pipe.next();
-            }
+            System.out.println("\n"+prompt);
             retString = pipe.nextLine().trim().toLowerCase();
-            retBool = retString.equals("y");
+            if(retString.equals("y")){
+                retBool = true;
+                isValid = true;
+            }else if (retString.equals("n")){
+                retBool = false;
+                isValid = true;
+            }else{
+                System.out.println("Please enter [y or n]\n['" + retString + "'] is not correct");
+            }
 
-        }while(!retBool);
+        }while(!isValid);
         return retBool;
     }
 }
