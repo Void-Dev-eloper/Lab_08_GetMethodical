@@ -2,11 +2,10 @@ import java.util.Scanner;
 
 public class CtoFTableDisplay {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        double fTemp;
+        double f;
         for(int c = -100; c <= 100; c++) {
-            fTemp = CtoF(c);
-            System.out.printf("%d\t%.2f\n", c, fTemp);
+            f = CtoF(c);
+            System.out.printf("%d\t%.2f\n", c, f);
         }
     }
 
