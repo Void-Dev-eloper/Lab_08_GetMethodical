@@ -15,7 +15,7 @@ public class SafeInput {
         do{
             System.out.print("\n" +prompt + ": ");
             retString = pipe.nextLine();
-        }while(retString.length() == 0);
+        }while(retString.isEmpty());
 
         return retString;
 
@@ -82,11 +82,11 @@ public class SafeInput {
 
             while(!pipe.hasNextDouble()){
                 System.out.println("[Error]: Invalid Number");
-                System.out.println(prompt);
+                System.out.println("\n"+ prompt + " in the range [" + low + " - " + high + "]");
                 pipe.next();
             }
             retDouble = pipe.nextDouble();
-            isValid = retDouble > low && retDouble < high ? true : false;
+            isValid = retDouble >= low && retDouble <= high ? true : false;
             if(!isValid){
                 System.out.println("[Error] Number out of Range");
             }
@@ -95,19 +95,18 @@ public class SafeInput {
     }
 
     public static boolean getYNConfirm(Scanner pipe, String prompt){
-        String retString = "";
         boolean isValid = false;
         boolean retBool = false;
         do {
-            System.out.println("\n"+prompt + ": ");
-            retString = pipe.nextLine().trim().toLowerCase();
+            System.out.println(prompt + ": ");
+            String retString = pipe.nextLine().trim().toLowerCase();
             if(retString.equals("y")){
                 retBool = true;
                 isValid = true;
             }else if (retString.equals("n")){
                 isValid = true;
             }else{
-                System.out.println("Please enter [y or n]\n['" + retString + "'] is not correct");
+                System.out.println("Please enter [y or n]\n['" + retString + "'] is not correct: ");
             }
 
         }while(!isValid);
@@ -127,4 +126,39 @@ public class SafeInput {
         }while(!isValid);
         return retString;
     }
+
+
+    public static void printStars(int length) {
+        for (int i = 0; i < length; i++) {
+            System.out.print("*");
+        }
+        System.out.println();
+    }
+
+    public static void printSpacesAndString(String str, int sideLength, int totalLength) {
+        int trueSideLength = (totalLength - str.length() - (sideLength*2))/2;
+
+        System.out.print("***");
+        for (int i = 0; i < trueSideLength; i++) {
+            System.out.print(" ");
+        }
+        System.out.print(str);
+        for (int i = 0; i < trueSideLength; i++) {
+            System.out.print(" ");
+        }
+        System.out.println("***");
+    }
+
+    public static String getRangedLengthString(Scanner pipe,String prompt, int length){
+        String retString = "";
+        do {
+            System.out.println(prompt);
+            retString = pipe.nextLine();
+        }while (!(!retString.isEmpty()) && !(retString.length() < length));
+        return retString;
+    }
+
+
+
+
 }
